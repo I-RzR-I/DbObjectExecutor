@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>0f2aafc5-883f-4763-9d14-13224402016a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SharedDbObjectExecutorInitInfo</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DataBaseTool\DataBaseHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataBaseTool\DataBaseObjectNames.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataBaseTool\DataBaseScripts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\FnGetResultAsTableDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Procedures\Result\SpGetRecordPagedCustom2Dto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Procedures\Result\SpGetRecordPagedCustomDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SpGetRecordMultiResultGrdDetailDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SpGetRecordMultiResultGrdDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SpGetRecordPagedDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Base\Functions\fnCheckIfExistFunction.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Base\Functions\fnCheckIfExistProcedure.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Functions\fnGetDbType.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Functions\fnGetHostLocationId.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Functions\fnGetResultAsTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Procedures\spGetRecordMultiResult.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Procedures\spGetRecordPaged.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Procedures\spNewTableId.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Functions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Procedures\Request\" />
+  </ItemGroup>
+</Project>
