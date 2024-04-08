@@ -18,8 +18,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\SpGetRecordMultiResultGrdDetailDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SpGetRecordMultiResultGrdDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SpGetRecordPagedDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Tables\Locations.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Scripts\Base\Functions\fnCheckIfExistTable.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="$(MSBuildThisFileDirectory)Scripts\Base\Functions\fnCheckIfExistFunction.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -44,9 +48,13 @@
     <None Include="$(MSBuildThisFileDirectory)Scripts\Procedures\spNewTableId.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)scripts\tables\Locations.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\Functions\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\Procedures\Request\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Scripts\Tables\" />
   </ItemGroup>
 </Project>

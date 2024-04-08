@@ -18,7 +18,6 @@
 
 using DbObjectExecutor.Attribute.Enums;
 using DbObjectExecutor.Attribute.Extensions;
-using DbObjectExecutor.Attribute.Helpers;
 using DbObjectExecutor.Enums;
 using DbObjectExecutor.Imp.EntityFramework;
 using DbObjectExecutor.Imp.EntityFrameworkNet5Test.Models.Procedures;
@@ -56,6 +55,29 @@ namespace DbObjectExecutor.Imp.EntityFrameworkNet5Test.Tests.Procedures
             var request = new SpNewTableIdRequest() { TableName = "TblX" };
 
             var sp = DbContext.LoadDbObject(DbProviderType.MsSql, request, typeof(SpNewTableIdRequest), 
+                DataBaseObjectNames.spNewTableId, DbExecutorType.Procedure);
+
+            sp.DbObjectBuilder.ExecuteNonQuery();
+            sp.DbObjectBuilder.Dispose();
+
+            //var outNextId = sp.OutParams
+            //    .FirstOrDefault(x => x.ParameterName == DbObjectExecutorAttributeHelper.GetDbObjectParam(() => request.OutNextId));
+            //var outNextId = sp.OutParams
+            //        .FirstOrDefault(x => x.ParameterName == nameof(request.OutNextId).GetDbObjectParam(request));
+            var outNextId = sp.OutParams
+                    .FirstOrDefault(x => x.ParameterName == nameof(request.OutNextId).GetDbObjectParam(request.GetType()));
+
+            Assert.IsNotNull(outNextId);
+            Assert.IsNotNull(outNextId.Value);
+            Assert.IsTrue((int)outNextId.Value > 0);
+        }
+
+        [TestMethod]
+        public void SpNewTableId_Own_Transaction_Success_DbContext_Test_2()
+        {
+            var request = new SpNewTableIdRequest() { TableName = "TblX" };
+
+            var sp = DbContext.LoadDbObject(request, typeof(SpNewTableIdRequest), 
                 DataBaseObjectNames.spNewTableId, DbExecutorType.Procedure);
 
             sp.DbObjectBuilder.ExecuteNonQuery();

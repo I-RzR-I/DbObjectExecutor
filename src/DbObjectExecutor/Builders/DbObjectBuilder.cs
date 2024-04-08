@@ -27,6 +27,7 @@ using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
+// ReSharper disable PossibleNullReferenceException
 // ReSharper disable MethodOverloadWithOptionalParameter
 // ReSharper disable PossibleIntendedRethrow
 // 
@@ -106,7 +107,7 @@ namespace DbObjectExecutor.Builders
             OpenConnection();
 
             var trans = transaction.IsNull()
-                ? _dbCommand.Connection.BeginTransaction(IsolationLevel.ReadUncommitted)
+                ? _dbCommand.Connection!.BeginTransaction(IsolationLevel.ReadUncommitted)
                 : transaction;
             _dbCommand.Transaction = trans;
 
@@ -116,8 +117,8 @@ namespace DbObjectExecutor.Builders
         /// <inheritdoc/>
         public IDbObjectCommon CommitTransaction()
         {
-            if (_dbCommand.Connection.State.IsOpen())
-                _dbCommand.Transaction.Commit();
+            if (_dbCommand.Connection!.State.IsOpen())
+                _dbCommand.Transaction!.Commit();
 
             return this;
         }
@@ -125,8 +126,8 @@ namespace DbObjectExecutor.Builders
         /// <inheritdoc/>
         public IDbObjectCommon RollBackTransaction()
         {
-            if (_dbCommand.Connection.State.IsOpen())
-                _dbCommand.Transaction.Rollback();
+            if (_dbCommand.Connection!.State.IsOpen())
+                _dbCommand.Transaction!.Rollback();
 
             return this;
         }
@@ -399,7 +400,7 @@ namespace DbObjectExecutor.Builders
         /// =================================================================================================
         private bool OpenConnection()
         {
-            if (_dbCommand.Connection.State.IsClose())
+            if (_dbCommand.Connection!.State.IsClose())
             {
                 _dbCommand.Connection.Open();
 
@@ -423,7 +424,7 @@ namespace DbObjectExecutor.Builders
         /// =================================================================================================
         private async Task<bool> OpenConnectionAsync(CancellationToken cancellationToken)
         {
-            if (_dbCommand.Connection.State.IsClose())
+            if (_dbCommand.Connection!.State.IsClose())
             {
                 await _dbCommand.Connection.OpenAsync(cancellationToken).ConfigureAwait(false);
 

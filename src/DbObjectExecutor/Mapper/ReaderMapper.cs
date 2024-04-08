@@ -18,12 +18,12 @@
 
 using DbObjectExecutor.Extensions;
 using DbObjectExecutor.Helpers;
+using DbObjectExecutor.Mapper.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -206,40 +206,48 @@ namespace DbObjectExecutor.Mapper
             var sourceType = typeof(T);
             var columns = new string[_reader.FieldCount];
 
-            var props = sourceType.GetPropertyInfos().ToArray();
+            var sourcePropertyInfo = new List<PropertyMapDto>(sourceType.GetPropertyInfos().WithIndex()
+                .Select(x => new PropertyMapDto()
+                {
+                    SourceName = x.item.Name,
+                    Property = x.item,
+                    AttributeName = DbObjectColumnAttributeHelper.GetDbObjectColumnName(x.item),
+                    IsInResponse = false
+                }));
 
-            for (var i = 0; i < _reader.FieldCount; ++i)
+
+            for (var i = 0; i < _reader.FieldCount; i++)
             {
-                var attributeColumnName = DbObjectColumnAttributeHelper.GetDbObjectColumnName(props[i]);
-
-                columns[i] = attributeColumnName.IsNullOrEmpty() ? _reader.GetName(i) : attributeColumnName;
+                var columnName = _reader.GetName(i);
+                columns[i] = columnName;
+                var sourceProp = sourcePropertyInfo.FirstOrDefault(x => x.AttributeName == columnName);
+                if (sourceProp.IsNotNull())
+                {
+                    sourceProp!.IsInResponse = true;
+                }
             }
 
+            //  Create result property list hash
             var propKey = ComputePropertyKey(columns);
             if (PropertiesCache.TryGetValue(propKey, out var propValue))
                 return propValue;
 
-            var properties = new List<ReaderProperty>(columns.Length);
+            var properties = new ReaderProperty[columns.Length];
             for (var i = 0; i < columns.Length; i++)
             {
-                PropertyInfo prop;
-                var propAttributeSource = sourceType.GetPropertyByName(columns[i].Replace("_", ""));
-                var propSource = sourceType.GetPropertyByName(props[i].Name.Replace("_", ""));
+                var property = sourcePropertyInfo.FirstOrDefault(x => x.AttributeName == columns[i].Replace("_", "") 
+                                                                      && x.IsInResponse.IsTrue());
+                if (property.IsNotNull())
+                {
+                    var setter = (Action<object, object>)ExpressionBuildHelper.BuildPropertySetter(property!.Property);
 
-                if (propSource.IsNull() && propAttributeSource.IsNull())
-                    continue;
-                else
-                    prop = propSource.IsNull() ? propAttributeSource : propSource;
-
-                var setter = (Action<object, object>)ExpressionBuildHelper.BuildPropertySetter(prop);
-
-                properties.Add(new ReaderProperty { Idx = i, Setter = setter, Name = prop.Name });
+                    properties[i] = new ReaderProperty { Idx = i, Setter = setter, Name = property.SourceName };
+                }
             }
 
-            var propertiesArray = properties.ToArray();
-            PropertiesCache[propKey] = propertiesArray;
+            PropertiesCache[propKey] = properties;
 
-            return propertiesArray;
+            return properties;
         }
     }
 }

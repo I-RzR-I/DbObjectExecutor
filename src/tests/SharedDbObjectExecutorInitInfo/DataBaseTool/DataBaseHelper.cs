@@ -68,9 +68,11 @@ namespace SharedDbObjectExecutorInitInfo.DataBaseTool
             //Run base functions
             ExecuteBatchScript(File.ReadAllText($"{Directory.GetCurrentDirectory()}/Scripts/Base/Functions/fnCheckIfExistFunction.sql"), ConnectionStringDefaultMsSql);
             ExecuteBatchScript(File.ReadAllText($"{Directory.GetCurrentDirectory()}/Scripts/Base/Functions/fnCheckIfExistProcedure.sql"), ConnectionStringDefaultMsSql);
+            ExecuteBatchScript(File.ReadAllText($"{Directory.GetCurrentDirectory()}/Scripts/Base/Functions/fnCheckIfExistTable.sql"), ConnectionStringDefaultMsSql);
 
             CreateFunctions();
             CreateStoredProcedures();
+            CreateTables();
         }
 
         private static void CreateStoredProcedures()
@@ -82,6 +84,12 @@ namespace SharedDbObjectExecutorInitInfo.DataBaseTool
         private static void CreateFunctions()
         {
             foreach (var file in Directory.EnumerateFiles($"{Directory.GetCurrentDirectory()}/Scripts/Functions", "*.sql"))
+                ExecuteBatchScript(File.ReadAllText(file), ConnectionStringDefaultMsSql);
+        }
+
+        private static void CreateTables()
+        {
+            foreach (var file in Directory.EnumerateFiles($"{Directory.GetCurrentDirectory()}/Scripts/Tables", "*.sql"))
                 ExecuteBatchScript(File.ReadAllText(file), ConnectionStringDefaultMsSql);
         }
 

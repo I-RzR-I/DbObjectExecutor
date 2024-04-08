@@ -19,6 +19,7 @@
 using DbObjectExecutor.Abstractions;
 using DbObjectExecutor.Attribute.Builders;
 using DbObjectExecutor.Attribute.Enums;
+using DbObjectExecutor.Attribute.Extensions;
 using DbObjectExecutor.Attribute.Models.Result;
 using DbObjectExecutor.Builders;
 using DbObjectExecutor.Enums;
@@ -79,6 +80,34 @@ namespace DbObjectExecutor.Imp.EntityFramework
         {
             var connection = ctx.Database.GetDbConnection();
             var transaction = ctx.Database.CurrentTransaction?.GetDbTransaction();
+
+            var procedureRequest = DbObjectExecutorRequestBuilder.BuildRequest(dbProviderType, connection, requestObjectInfo,
+                requestObjectInfoType, dbObjectName, commandType, true);
+
+            procedureRequest.DbObjectBuilder.UseTransaction(transaction);
+
+            return procedureRequest;
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     A DbContext extension method that loads database object.
+        /// </summary>
+        /// <param name="ctx">The ctx to act on.</param>
+        /// <param name="requestObjectInfo">Information describing the request object.</param>
+        /// <param name="requestObjectInfoType">Type of the request object information.</param>
+        /// <param name="dbObjectName">(Optional) Name of the database object.</param>
+        /// <param name="commandType">(Optional) Type of the command.</param>
+        /// <returns>
+        ///     The database object.
+        /// </returns>
+        /// =================================================================================================
+        public static BuildRequestResultDto LoadDbObject(this DbContext ctx, object requestObjectInfo,
+            Type requestObjectInfoType, string dbObjectName = null, DbExecutorType commandType = DbExecutorType.Undefined)
+        {
+            var connection = ctx.Database.GetDbConnection();
+            var transaction = ctx.Database.CurrentTransaction?.GetDbTransaction();
+            var dbProviderType = connection.GetDbProviderType();
 
             var procedureRequest = DbObjectExecutorRequestBuilder.BuildRequest(dbProviderType, connection, requestObjectInfo,
                 requestObjectInfoType, dbObjectName, commandType, true);
