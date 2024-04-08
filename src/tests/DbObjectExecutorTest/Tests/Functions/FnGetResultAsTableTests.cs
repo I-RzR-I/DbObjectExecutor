@@ -40,7 +40,7 @@ namespace DbObjectExecutorTest.Tests.Functions
             var objConn = new SqlConnection(DataBaseHelper.ConnectionStringDefaultMsSql);
             IDbObjectBuilder sp = new DbObjectBuilder();
 
-            sp.SetInitInfo("SELECT * FROM fnGetResultAsTable(1)", objConn, DbExecutorType.FunctionAsText);
+            sp.SetInitInfo($"SELECT * FROM {DataBaseObjectNames.fnGetResultAsTable}(1)", objConn, DbExecutorType.FunctionAsText);
 
             sp.Execute(reader =>
             {
@@ -66,7 +66,7 @@ namespace DbObjectExecutorTest.Tests.Functions
             var objConn = new SqlConnection(DataBaseHelper.ConnectionStringDefaultMsSql);
             IDbObjectBuilder sp = new DbObjectBuilder();
 
-            sp.SetInitInfo("SELECT * FROM fnGetResultAsTable(1)", objConn, DbExecutorType.FunctionAsText);
+            sp.SetInitInfo($"SELECT * FROM {DataBaseObjectNames.fnGetResultAsTable}(1)", objConn, DbExecutorType.FunctionAsText);
 
             sp.Execute(reader => result = reader.ToList<FnGetResultAsTableDto>());
 

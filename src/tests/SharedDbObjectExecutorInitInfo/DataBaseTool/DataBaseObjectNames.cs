@@ -24,10 +24,14 @@ namespace SharedDbObjectExecutorInitInfo.DataBaseTool
         public const string fnGetDbType = "fnGetDbType";
         public const string fnGetHostLocationId = "fnGetHostLocationId";
         public const string fnGetResultAsTable = "fnGetResultAsTable";
+        public const string fnCheckIfExistTable = "fnCheckIfExistTable";
 
         // Procedures
         public const string spNewTableId = "spNewTableId";
         public const string spGetRecordPaged = "spGetRecordPaged";
         public const string spGetRecordMultiResult = "spGetRecordMultiResult";
+        
+        // Tables
+        public const string Locations = "Locations";
     }
 }
