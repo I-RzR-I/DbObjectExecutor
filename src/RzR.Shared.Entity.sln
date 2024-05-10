@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbObjectExecutor.Imp.Entity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbObjectExecutorWithDITest", "tests\DbObjectExecutorWithDITest\DbObjectExecutorWithDITest.csproj", "{B91EE4B2-DD8E-49DD-8478-3D1000D3D2E2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbObjectExecutorWithDINet6Test", "tests\DbObjectExecutorWithDINet6Test\DbObjectExecutorWithDINet6Test.csproj", "{0AF07CBD-1B26-494B-A3EE-DF301F8B249F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{B91EE4B2-DD8E-49DD-8478-3D1000D3D2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B91EE4B2-DD8E-49DD-8478-3D1000D3D2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B91EE4B2-DD8E-49DD-8478-3D1000D3D2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF07CBD-1B26-494B-A3EE-DF301F8B249F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF07CBD-1B26-494B-A3EE-DF301F8B249F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF07CBD-1B26-494B-A3EE-DF301F8B249F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF07CBD-1B26-494B-A3EE-DF301F8B249F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,18 +95,20 @@ Global
 		{8A5F2768-BD6E-4E11-8B48-92FAEF7A1844} = {E737BE4D-6DFF-4A67-A3D9-2AC58BFBBC07}
 		{CE93444B-6F0B-40CF-A24B-767ADD839C6E} = {E737BE4D-6DFF-4A67-A3D9-2AC58BFBBC07}
 		{B91EE4B2-DD8E-49DD-8478-3D1000D3D2E2} = {E737BE4D-6DFF-4A67-A3D9-2AC58BFBBC07}
+		{0AF07CBD-1B26-494B-A3EE-DF301F8B249F} = {E737BE4D-6DFF-4A67-A3D9-2AC58BFBBC07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_UseUniversalClock = True
-		BuildVersion_ConfigurationName = Release
-		BuildVersion_AssemblyInfoFilename = shared\GeneralAssemblyInfo.cs
-		BuildVersion_StartDate = 2023/4/30
-		BuildVersion_UpdateFileVersion = True
-		BuildVersion_UpdateAssemblyVersion = True
-		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
 		SolutionGuid = {4B5BD8B8-58AD-47B4-B85A-E7242D47B9FE}
+		BuildVersion_BuildVersioningStyle = None.None.Increment.TimeStamp
+		BuildVersion_UpdateAssemblyVersion = True
+		BuildVersion_UpdateFileVersion = True
+		BuildVersion_StartDate = 2023/4/30
+		BuildVersion_AssemblyInfoFilename = shared\GeneralAssemblyInfo.cs
+		BuildVersion_ConfigurationName = Release
+		BuildVersion_UseUniversalClock = True
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tests\SharedDbObjectExecutorInitInfo\SharedDbObjectExecutorInitInfo.projitems*{0af07cbd-1b26-494b-a3ee-df301f8b249f}*SharedItemsImports = 5
 		tests\SharedDbObjectExecutorInitInfo\SharedDbObjectExecutorInitInfo.projitems*{0f2aafc5-883f-4763-9d14-13224402016a}*SharedItemsImports = 13
 		tests\SharedDbObjectExecutorInitInfo\SharedDbObjectExecutorInitInfo.projitems*{67bf3c35-63c1-4c3b-8a53-44d5432f129e}*SharedItemsImports = 5
 		tests\SharedDbObjectExecutorInitInfo\SharedDbObjectExecutorInitInfo.projitems*{8a5f2768-bd6e-4e11-8b48-92faef7a1844}*SharedItemsImports = 5
