@@ -17,6 +17,11 @@ namespace DbObjectExecutorWithDITest.Tests
             _dbObjectBuilder.SetIn("TableName", "TblX");
             _dbObjectBuilder.SetOut("NextId", out var outNextId, -1);
 
+            var script0 = _dbObjectBuilder.BuildRawScriptAsync(0).GetAwaiter().GetResult();
+            var script1 = _dbObjectBuilder.BuildRawScriptAsync(1).GetAwaiter().GetResult();
+            var script2 = _dbObjectBuilder.BuildRawScriptAsync(2).GetAwaiter().GetResult();
+            var script3 = _dbObjectBuilder.BuildRawScriptAsync(3).GetAwaiter().GetResult();
+
             _dbObjectBuilder.ExecuteNonQuery();
 
             _dbObjectBuilder.CommitTransaction()

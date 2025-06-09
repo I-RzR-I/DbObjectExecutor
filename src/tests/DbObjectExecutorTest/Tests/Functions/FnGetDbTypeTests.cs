@@ -79,6 +79,10 @@ namespace DbObjectExecutorTest.Tests.Functions
 
             sp.SetInitInfo(DataBaseObjectNames.fnGetDbType, objConn, DbExecutorType.FunctionAsProcedure);
             sp.Return(out IOutputParam<string> stringName);
+
+            var script3 = sp.BuildRawScriptAsync(3).GetAwaiter().GetResult();
+            var script4 = sp.BuildRawScriptAsync(4).GetAwaiter().GetResult();
+
             sp.ExecuteNonQuery();
 
             sp.Dispose();
