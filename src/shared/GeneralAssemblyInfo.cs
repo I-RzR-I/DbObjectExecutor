@@ -29,7 +29,7 @@ using System.Resources;
 
 [assembly: AssemblyCompany("RzR ®")]
 [assembly: AssemblyProduct("DbObjectExecutor")]
-[assembly: AssemblyCopyright("Copyright © 2022-2024 RzR All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © 2022-2025 RzR All rights reserved.")]
 [assembly: AssemblyTrademark("® RzR™")]
 [assembly: AssemblyDescription("The idea to implement the current repository started many years ago and is based on simple ideas and problems that must be solved. The first and the base problem is in the stored procedure or function execution. So practically in every ORM you can find, the method of execution/implementation and execution of an object (mentioned above) is quite difficult and does not allow their execution in a fairly simple and adequate way.")]
 
