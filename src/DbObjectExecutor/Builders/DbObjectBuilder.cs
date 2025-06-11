@@ -73,6 +73,8 @@ namespace DbObjectExecutor.Builders
         /// =================================================================================================
         private DbCommand _dbCommand;
 
+        private DbExecutorType _commandType;
+
         /// <inheritdoc/>
         public void Dispose() => _dbCommand.Dispose();
 
@@ -143,6 +145,8 @@ namespace DbObjectExecutor.Builders
 
             if (commandType == DbExecutorType.Undefined)
                 throw new NotSupportedException(nameof(commandType));
+
+            _commandType = commandType;
 
             var cmd = connection.CreateCommand();
             cmd.CommandType = commandType switch
@@ -274,7 +278,7 @@ namespace DbObjectExecutor.Builders
         public Task ExecuteAsync(Func<DbDataReader, Task> function) => ExecuteAsync(function, CancellationToken.None);
 
         /// <inheritdoc/>
-        public async Task ExecuteAsync(Func<DbDataReader, Task> function, CancellationToken cancellationToken)
+        public async Task ExecuteAsync(Func<DbDataReader, Task> function, CancellationToken cancellationToken = default)
         {
             if (function.IsNull())
                 throw new ArgumentNullException(nameof(function));
@@ -327,7 +331,7 @@ namespace DbObjectExecutor.Builders
         public Task<int> ExecuteNonQueryAsync() => ExecuteNonQueryAsync(CancellationToken.None);
 
         /// <inheritdoc/>
-        public async Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
+        public async Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken = default)
         {
             var isOwnsConnection = false;
             try
@@ -370,7 +374,7 @@ namespace DbObjectExecutor.Builders
         public Task ExecuteScalarAsync<T>(Action<T> action) => ExecuteScalarAsync(action, CancellationToken.None);
 
         /// <inheritdoc/>
-        public async Task ExecuteScalarAsync<T>(Action<T> action, CancellationToken cancellationToken)
+        public async Task ExecuteScalarAsync<T>(Action<T> action, CancellationToken cancellationToken = default)
         {
             var isOwnsConnection = false;
             try
@@ -389,6 +393,10 @@ namespace DbObjectExecutor.Builders
                 Dispose();
             }
         }
+
+        /// <inheritdoc />
+        public async Task<string> BuildRawScriptAsync(int dbProviderId, CancellationToken cancellationToken = default)
+            => await Task.Run(() => _dbCommand.AsRawSql(_commandType, dbProviderId), cancellationToken);
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
@@ -422,7 +430,7 @@ namespace DbObjectExecutor.Builders
         ///     True if it succeeds and it is inner own connection, false if not.
         /// </returns>
         /// =================================================================================================
-        private async Task<bool> OpenConnectionAsync(CancellationToken cancellationToken)
+        private async Task<bool> OpenConnectionAsync(CancellationToken cancellationToken = default)
         {
             if (_dbCommand.Connection!.State.IsClose())
             {

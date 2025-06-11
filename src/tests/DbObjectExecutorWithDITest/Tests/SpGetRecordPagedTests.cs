@@ -23,10 +23,16 @@ namespace DbObjectExecutorWithDITest.Tests
 
             _dbObjectBuilder.SetInitInfo(DataBaseObjectNames.spGetRecordPaged, objConn, DbExecutorType.Procedure);
             _dbObjectBuilder.SetIn("Skip", "0");
-            _dbObjectBuilder.SetIn("Take", "5");
+            _dbObjectBuilder.SetIn("Take", 5);
             _dbObjectBuilder.SetIn("OrderBy", "Name");
             _dbObjectBuilder.SetIn("Where", "");
             _dbObjectBuilder.SetOut("RowsCount", out var outNextId, 0);
+
+            var script0 = _dbObjectBuilder.BuildRawScriptAsync(0).GetAwaiter().GetResult();
+            var script1 = _dbObjectBuilder.BuildRawScriptAsync(1).GetAwaiter().GetResult();
+            var script2 = _dbObjectBuilder.BuildRawScriptAsync(2).GetAwaiter().GetResult();
+            var script3 = _dbObjectBuilder.BuildRawScriptAsync(3).GetAwaiter().GetResult();
+            var script4 = _dbObjectBuilder.BuildRawScriptAsync(4).GetAwaiter().GetResult();
 
             _dbObjectBuilder.Execute(reader =>
             {
@@ -53,7 +59,7 @@ namespace DbObjectExecutorWithDITest.Tests
         {
             var result = new List<SpGetRecordPagedDto>();
             var objConn = new SqlConnection(DataBaseHelper.ConnectionStringDefaultMsSql);
-            
+
             _dbObjectBuilder.SetInitInfo(DataBaseObjectNames.spGetRecordPaged, objConn, DbExecutorType.Procedure);
             _dbObjectBuilder.SetIn("Skip", "0");
             _dbObjectBuilder.SetIn("Take", "5");

@@ -17,10 +17,12 @@
 #region U S A G E S
 
 using DbObjectExecutor.Builders;
+using DbObjectExecutor.Enums;
 using DbObjectExecutor.Helpers;
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Text;
 
 #endregion
 
@@ -98,6 +100,74 @@ namespace DbObjectExecutor.Extensions
             var param = dbCommand.AddInnerParam(name, val, direction, defaultValue, size, precision, scale);
 
             return new OutputParam<T>(param, defaultValue);
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     A DbCommand extension method that converts this object to a raw SQL.
+        /// </summary>
+        /// <param name="dbCommand">The dbCommand to act on.</param>
+        /// <param name="executorType"></param>
+        /// <param name="dbProviderId">
+        ///     Identifier for the database provider.
+        ///     Is type of DbObjectExecutor.Attribute.Enums.DbProviderType.
+        /// </param>
+        /// <remarks>
+        /// </remarks>
+        /// <returns>
+        ///     A database command as raw string.
+        /// </returns>
+        /// =================================================================================================
+        internal static string AsRawSql(this DbCommand dbCommand, DbExecutorType executorType, int dbProviderId)
+        {
+            var sb = new StringBuilder();
+
+            try
+            {
+                switch (executorType)
+                {
+                    case DbExecutorType.FunctionAsProcedure:
+                        switch (dbProviderId)
+                        {
+                            case 0:
+                                sb.Append(RawScriptHelper.AsMsSqlServerFunctionScript(ref dbCommand));
+                                break;
+                            case 2:
+                                sb.Append(RawScriptHelper.AsPostgreSqlServerFunctionScript(ref dbCommand));
+                                break;
+                            case 3:
+                                sb.Append(RawScriptHelper.AsOracleServerFunctionScript(ref dbCommand));
+                                break;
+                            case 4:
+                                sb.Append(RawScriptHelper.AsMySqlServerFunctionScript(ref dbCommand));
+                                break;
+                        }
+                        break;
+                    case DbExecutorType.Procedure:
+                        switch (dbProviderId)
+                        {
+                            case 0:
+                                sb.Append(RawScriptHelper.AsMsSqlServerProcedureScript(ref dbCommand));
+                                break;
+                            case 2:
+                                sb.Append(RawScriptHelper.AsPostgreSqlServerProcedureScript(ref dbCommand));
+                                break;
+                            case 3:
+                                sb.Append(RawScriptHelper.AsOracleServerProcedureScript(ref dbCommand));
+                                break;
+                            case 4:
+                                sb.Append(RawScriptHelper.AsMySqlServerProcedureScript(ref dbCommand));
+                                break;
+                        }
+                        break;
+                    default:
+                        sb.AppendLine(dbCommand.CommandText);
+                        break;
+                }
+            }
+            catch {/* ignored */}
+
+            return sb.ToString();
         }
     }
 }

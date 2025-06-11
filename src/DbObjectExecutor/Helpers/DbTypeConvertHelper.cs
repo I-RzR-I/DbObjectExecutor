@@ -105,5 +105,246 @@ namespace DbObjectExecutor.Helpers
 
             throw new NotSupportedException(string.Format(ResourceMessagesHelper.NotSupportedType, t.Name));
         }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Gets milliseconds SQL server data type.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when one or more arguments are outside the required range.
+        /// </exception>
+        /// <param name="paramDbType">The paramDbType to act on.</param>
+        /// <returns>
+        ///     The milliseconds SQL server data type.
+        /// </returns>
+        /// =================================================================================================
+        internal static string GetMsSqlServerDataType(DbType paramDbType)
+        {
+            string dataType;
+            switch (paramDbType)
+            {
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                    dataType = "VARCHAR";
+                    break;
+                case DbType.Object:
+                case DbType.Binary:
+                    dataType = "VARBINARY";
+                    break;
+                case DbType.Boolean:
+                    dataType = "BIT";
+                    break;
+                case DbType.Byte:
+                case DbType.SByte:
+                    dataType = "TINYINT";
+                    break;
+                case DbType.Currency:
+                    dataType = "MONEY";
+                    break;
+                case DbType.Date:
+                case DbType.DateTime:
+                    dataType = "DATETIME";
+                    break;
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                    dataType = "DATETIME2";
+                    break;
+                case DbType.Decimal:
+                    dataType = "DECIMAL";
+                    break;
+                case DbType.Double:
+                    dataType = "FLOAT";
+                    break;
+                case DbType.Int16:
+                case DbType.UInt16:
+                    dataType = "SMALLINT";
+                    break;
+                case DbType.Int32:
+                case DbType.UInt32:
+                    dataType = "INT";
+                    break;
+                case DbType.Int64:
+                case DbType.UInt64:
+                    dataType = "BIGINT";
+                    break;
+                case DbType.Single:
+                    dataType = "REAL";
+                    break;
+                case DbType.Guid:
+                    dataType = "UNIQUEIDENTIFIER";
+                    break;
+                case DbType.String:
+                    dataType = "NVARCHAR";
+                    break;
+                case DbType.StringFixedLength:
+                    dataType = "NCHAR";
+                    break;
+                case DbType.Time:
+                    dataType = "TIME";
+                    break;
+                case DbType.VarNumeric:
+                    dataType = "NUMERIC";
+                    break;
+                case DbType.Xml:
+                    dataType = "XML";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(paramDbType), paramDbType, null);
+            }
+
+            return dataType;
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Gets postgre SQL server data type.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when one or more arguments are outside the required range.
+        /// </exception>
+        /// <param name="paramDbType">The paramDbType to act on.</param>
+        /// <returns>
+        ///     The postgre SQL server data type.
+        /// </returns>
+        /// =================================================================================================
+        internal static string GetPostgreSqlServerDataType(DbType paramDbType)
+        {
+            string dataType;
+            switch (paramDbType)
+            {
+                case DbType.Object:
+                case DbType.Binary:
+                    dataType = "BYTEA";
+                    break;
+                case DbType.Boolean:
+                    dataType = "BOOLEAN";
+                    break;
+                case DbType.Currency:
+                    dataType = "MONEY";
+                    break;
+                case DbType.Date:
+                case DbType.DateTime:
+                    dataType = "DATETIME";
+                    break;
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                    dataType = "TIMESTAMP";
+                    break;
+                case DbType.Decimal:
+                case DbType.VarNumeric:
+                    dataType = "NUMERIC";
+                    break;
+                case DbType.Double:
+                    dataType = "FLOAT";
+                    break;
+                case DbType.Byte:
+                case DbType.SByte:
+                case DbType.Int16:
+                case DbType.UInt16:
+                    dataType = "SMALLINT";
+                    break;
+                case DbType.Int32:
+                case DbType.UInt32:
+                    dataType = "INTEGER";
+                    break;
+                case DbType.Int64:
+                case DbType.UInt64:
+                    dataType = "BIGINT";
+                    break;
+                case DbType.Single:
+                    dataType = "REAL";
+                    break;
+                case DbType.Guid:
+                    dataType = "UUID";
+                    break;
+                case DbType.String:
+                case DbType.StringFixedLength:
+                case DbType.AnsiString:
+                case DbType.AnsiStringFixedLength:
+                    dataType = "TEXT";
+                    break;
+                case DbType.Time:
+                    dataType = "TIME";
+                    break;
+                case DbType.Xml:
+                    dataType = "XML";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(paramDbType), paramDbType, null);
+            }
+
+            return dataType;
+        }
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Gets oracle server data type.
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when one or more arguments are outside the required range.
+        /// </exception>
+        /// <param name="paramDbType">The paramDbType to act on.</param>
+        /// <returns>
+        ///     The oracle server data type.
+        /// </returns>
+        /// =================================================================================================
+        internal static string GetOracleServerDataType(DbType paramDbType)
+        {
+            string dataType;
+            switch (paramDbType)
+            {
+                case DbType.Object:
+                case DbType.Binary:
+                case DbType.Guid:
+                    dataType = "RAW";
+                    break;
+                case DbType.Date:
+                case DbType.DateTime:
+                    dataType = "DATE";
+                    break;
+                case DbType.Time:
+                case DbType.DateTime2:
+                case DbType.DateTimeOffset:
+                    dataType = "TIMESTAMP";
+                    break;
+                case DbType.Currency:
+                case DbType.Decimal:
+                case DbType.Single:
+                case DbType.Double:
+                    dataType = "FLOAT";
+                    break;
+                case DbType.VarNumeric:
+                    dataType = "NUMERIC";
+                    break;
+                case DbType.Boolean:
+                case DbType.Byte:
+                case DbType.SByte:
+                case DbType.Int16:
+                case DbType.UInt16:
+                case DbType.Int32:
+                case DbType.UInt32:
+                case DbType.Int64:
+                case DbType.UInt64:
+                    dataType = "INTEGER";
+                    break;
+                case DbType.String:
+                case DbType.StringFixedLength:
+                    dataType = "NCHAR";
+                    break;
+                case DbType.AnsiString:
+                    dataType = "VARCHAR2";
+                    break;
+                case DbType.AnsiStringFixedLength:
+                    dataType = "CHAR";
+                    break;
+                case DbType.Xml:
+                    dataType = "CLOB";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(paramDbType), paramDbType, null);
+            }
+
+            return dataType;
+        }
     }
 }

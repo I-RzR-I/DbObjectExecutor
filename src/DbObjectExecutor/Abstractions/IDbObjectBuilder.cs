@@ -4,10 +4,10 @@
 //  Created On       : 2024-02-28 16:40
 // 
 //  Last Modified By : RzR
-//  Last Modified On : 2024-03-05 19:13
+//  Last Modified On : 2025-06-02 22:07
 // ***********************************************************************
-//  <copyright file="IDbObjectBuilder.cs" company="">
-//   Copyright (c) RzR. All rights reserved.
+//  <copyright file="IDbObjectBuilder.cs" company="RzR SOFT & TECH">
+//   Copyright © RzR. All rights reserved.
 //  </copyright>
 // 
 //  <summary>
@@ -67,12 +67,14 @@ namespace DbObjectExecutor.Abstractions
         ///     When <paramref name="cancellationToken" /> was cancelled.
         /// </exception>
         /// <param name="function">Function to do with the result sets.</param>
-        /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        /// <param name="cancellationToken">
+        ///     (Optional) The token to monitor for cancellation requests.
+        /// </param>
         /// <returns>
         ///     A Task.
         /// </returns>
         /// =================================================================================================
-        Task ExecuteAsync(Func<DbDataReader, Task> function, CancellationToken cancellationToken);
+        Task ExecuteAsync(Func<DbDataReader, Task> function, CancellationToken cancellationToken = default);
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
@@ -101,12 +103,14 @@ namespace DbObjectExecutor.Abstractions
         /// <exception cref="TaskCanceledException">
         ///     When <paramref name="cancellationToken" /> was cancelled.
         /// </exception>
-        /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        /// <param name="cancellationToken">
+        ///     (Optional) The token to monitor for cancellation requests.
+        /// </param>
         /// <returns>
         ///     The number of rows affected.
         /// </returns>
         /// =================================================================================================
-        Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken);
+        Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken = default);
 
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
@@ -142,11 +146,27 @@ namespace DbObjectExecutor.Abstractions
         /// <param name="action">
         ///     Action applied to the first column of the first row in the result set.
         /// </param>
-        /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
+        /// <param name="cancellationToken">
+        ///     (Optional) The token to monitor for cancellation requests.
+        /// </param>
         /// <returns>
         ///     A Task.
         /// </returns>
         /// =================================================================================================
-        Task ExecuteScalarAsync<T>(Action<T> action, CancellationToken cancellationToken);
+        Task ExecuteScalarAsync<T>(Action<T> action, CancellationToken cancellationToken = default);
+
+        /// -------------------------------------------------------------------------------------------------
+        /// <summary>
+        ///     Builds raw script asynchronous.
+        /// </summary>
+        /// <param name="dbProviderId">Identifier for the database provider.</param>
+        /// <param name="cancellationToken">
+        ///     (Optional) The token to monitor for cancellation requests.
+        /// </param>
+        /// <returns>
+        ///     The build raw script.
+        /// </returns>
+        /// =================================================================================================
+        Task<string> BuildRawScriptAsync(int dbProviderId, CancellationToken cancellationToken = default);
     }
 }
