@@ -1,10 +1,10 @@
 @echo off
 cls
 
-echo "Write the source branch name (you current branch name, where were the changes made): " 
+echo Write the source branch name (you current branch name, where were the changes made): 
 set /p userDefinedSourceBranch=
 echo.
-echo "Write the destination branch name (the branch from which you can get the latest changes, like 'develop' or 'main/master'): " 
+echo Write the destination branch name (the branch from which you can get the latest changes, like 'develop' or 'main/master'): 
 set /p userDefinedDestinationBranch=
 echo.
 
